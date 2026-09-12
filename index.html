@@ -244,8 +244,40 @@
     }
     .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
 
+    /* MOBILE NAV */
+    .mobile-nav { display: none; position: relative; }
+    .mobile-nav summary {
+      list-style: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid rgba(18, 53, 47, 0.14);
+      color: var(--forest);
+    }
+    .mobile-nav summary::-webkit-details-marker { display: none; }
+    .mobile-nav summary svg { width: 22px; height: 22px; }
+    .mobile-nav .icon-close { display: none; }
+    .mobile-nav[open] .icon-close { display: block; }
+    .mobile-nav[open] .icon-open { display: none; }
+    .mobile-panel {
+      position: absolute; right: 0; top: calc(100% + 12px);
+      min-width: 220px;
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 10px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    .mobile-panel a:not(.btn) {
+      padding: 12px 14px; border-radius: 10px;
+      font-size: 0.98rem; font-weight: 500; color: var(--forest);
+    }
+    .mobile-panel a:not(.btn):hover { background: rgba(18, 53, 47, 0.05); color: var(--gold); }
+    .mobile-panel .btn { margin-top: 6px; }
+
     @media (max-width: 900px) {
       .nav-links { display: none; }
+      .mobile-nav { display: block; }
       .hero-grid, .cards, .split, .why-grid, form { grid-template-columns: 1fr; }
       .hero { padding-bottom: 20px; }
       section { padding: 64px 0; }
@@ -270,6 +302,22 @@
         <a href="#why">Why us</a>
         <a href="#contact" class="btn btn-gold">Talk to us</a>
       </nav>
+      <details class="mobile-nav">
+        <summary aria-label="Menu">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18"/>
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M5 5l14 14M19 5L5 19"/>
+          </svg>
+        </summary>
+        <nav class="mobile-panel">
+          <a href="#services">Services</a>
+          <a href="#process">Process</a>
+          <a href="#why">Why us</a>
+          <a href="#contact" class="btn btn-gold">Talk to us</a>
+        </nav>
+      </details>
     </div>
   </header>
 
@@ -490,6 +538,13 @@
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
+
+    /* Close the mobile menu after tapping an anchor link */
+    document.querySelectorAll(".mobile-panel a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        document.querySelector(".mobile-nav").removeAttribute("open");
+      });
+    });
     function sendMail(e) {
       e.preventDefault();
       const f = e.target;
