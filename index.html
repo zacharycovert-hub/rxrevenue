@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RxRevenue LLC — Revenue Cycle Management</title>
+  <meta name="description" content="RxRevenue LLC handles medical billing end to end — claims, denials, credentialing, AR, and payer enrollment — so practices get paid correctly and on time." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0b1c18;
+      --forest: #12352f;
+      --pine: #1b4d44;
+      --moss: #2f6b5e;
+      --gold: #c9a45c;
+      --gold-2: #e4c98a;
+      --paper: #f4efe6;
+      --cream: #faf7f1;
+      --line: rgba(201, 164, 92, 0.28);
+      --muted: #6d7a74;
+      --white: #ffffff;
+      --shadow: 0 24px 60px rgba(11, 28, 24, 0.16);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Outfit", system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.55;
+      letter-spacing: -0.01em;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+
+    /* NAV */
+    header.nav {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(16px);
+      background: rgba(250, 247, 241, 0.82);
+      border-bottom: 1px solid rgba(18, 53, 47, 0.08);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 76px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand svg { width: 42px; height: 42px; }
+    .brand-name {
+      font-family: "Instrument Serif", serif;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-name span { color: var(--gold); }
+    .nav-links { display: flex; gap: 28px; align-items: center; font-size: 0.92rem; font-weight: 500; color: var(--forest); }
+    .nav-links a:hover { color: var(--gold); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: 0; cursor: pointer;
+      padding: 12px 20px; border-radius: 999px;
+      font-family: inherit; font-weight: 600; font-size: 0.92rem;
+      transition: 0.2s ease;
+    }
+    .btn-gold { background: linear-gradient(180deg, var(--gold-2), var(--gold)); color: var(--ink); }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(201,164,92,.35); }
+    .btn-dark { background: var(--ink); color: var(--paper); }
+    .btn-dark:hover { background: var(--pine); }
+    .btn-ghost { background: transparent; color: var(--paper); border: 1px solid rgba(244,239,230,.28); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold-2); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      background:
+        radial-gradient(900px 420px at 85% -10%, rgba(201,164,92,.18), transparent 55%),
+        linear-gradient(165deg, #0b1c18 0%, #12352f 48%, #1a433c 100%);
+      color: var(--paper);
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute; inset: auto -10% -30% 40%;
+      height: 420px;
+      background: radial-gradient(circle, rgba(201,164,92,.12), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px;
+      padding: 72px 0 80px; align-items: center;
+    }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold-2); font-weight: 600; margin-bottom: 18px;
+    }
+    .kicker::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
+    h1 {
+      font-family: "Instrument Serif", serif;
+      font-weight: 400;
+      font-size: clamp(2.6rem, 5vw, 4.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    h1 em { font-style: italic; color: var(--gold-2); }
+    .lede { margin-top: 22px; font-size: 1.12rem; color: rgba(244,239,230,.78); max-width: 34em; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+    .hero-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(201,164,92,.22);
+      border-radius: 24px;
+      padding: 28px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-card h3 {
+      font-family: "Instrument Serif", serif;
+      font-size: 1.45rem; font-weight: 400; margin-bottom: 16px;
+    }
+    .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stat { padding: 14px 0; border-top: 1px solid rgba(244,239,230,.1); }
+    .stat b { display: block; font-size: 1.45rem; color: var(--gold-2); font-weight: 600; }
+    .stat span { font-size: 0.82rem; color: rgba(244,239,230,.65); }
+
+    /* BAND */
+    .trust {
+      background: var(--paper);
+      border-bottom: 1px solid rgba(18,53,47,.08);
+      padding: 22px 0;
+    }
+    .trust-row {
+      display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+      font-size: 0.84rem; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    /* SECTIONS */
+    section { padding: 88px 0; }
+    h2 {
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(2rem, 3.4vw, 3rem);
+      font-weight: 400; letter-spacing: -0.03em; line-height: 1.12;
+    }
+    .section-head { max-width: 680px; margin-bottom: 40px; }
+    .section-head p { margin-top: 14px; color: var(--muted); font-size: 1.05rem; }
+
+    .services { background: var(--cream); }
+    .cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .card {
+      background: var(--white);
+      border: 1px solid rgba(18,53,47,.08);
+      border-radius: 20px; padding: 26px;
+      box-shadow: 0 1px 0 rgba(255,255,255,.7) inset;
+      transition: 0.2s ease;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--line); }
+    .icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: #eef4f1; color: var(--pine); margin-bottom: 16px;
+    }
+    .card h3 { font-size: 1.12rem; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+
+    .split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .panel {
+      background: var(--forest);
+      color: var(--paper);
+      border-radius: 28px;
+      padding: 40px;
+      min-height: 420px;
+      position: relative;
+      overflow: hidden;
+    }
+    .panel::before {
+      content: "Rx";
+      position: absolute; right: -10px; bottom: -40px;
+      font-family: "Instrument Serif", serif;
+      font-size: 16rem; color: rgba(201,164,92,.08); line-height: 1;
+    }
+    .steps { display: grid; gap: 18px; }
+    .step { display: grid; grid-template-columns: 48px 1fr; gap: 14px; }
+    .num {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid var(--line);
+      display: grid; place-items: center;
+      font-family: "Instrument Serif", serif; font-size: 1.2rem; color: var(--gold);
+    }
+    .step h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .step p { color: rgba(244,239,230,.7); font-size: 0.94rem; }
+
+    .why { background: var(--paper); }
+    .why-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; }
+    .checks { list-style: none; display: grid; gap: 14px; margin-top: 24px; }
+    .checks li {
+      display: grid; grid-template-columns: 22px 1fr; gap: 12px;
+      color: var(--forest);
+    }
+    .checks svg { margin-top: 3px; }
+
+    .quote {
+      background: var(--white);
+      border-left: 3px solid var(--gold);
+      padding: 28px;
+      border-radius: 0 20px 20px 0;
+      font-family: "Instrument Serif", serif;
+      font-size: 1.55rem; line-height: 1.3;
+    }
+    .quote cite { display: block; margin-top: 16px; font-family: "Outfit", sans-serif; font-size: 0.88rem; font-style: normal; color: var(--muted); }
+
+    .contact {
+      background:
+        radial-gradient(700px 280px at 0% 100%, rgba(201,164,92,.16), transparent 50%),
+        var(--ink);
+      color: var(--paper);
+    }
+    .contact .section-head p { color: rgba(244,239,230,.7); }
+    form {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(201,164,92,.2);
+      border-radius: 24px; padding: 28px;
+    }
+    form .full { grid-column: 1 / -1; }
+    label { display: block; font-size: 0.78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-2); margin-bottom: 6px; }
+    input, textarea, select {
+      width: 100%; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(244,239,230,.12);
+      color: var(--paper); border-radius: 12px;
+      padding: 12px 14px; font: inherit;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    input:focus, textarea:focus, select:focus { outline: 1px solid var(--gold); }
+
+    footer {
+      background: #071411; color: rgba(244,239,230,.55);
+      padding: 28px 0 36px; font-size: 0.88rem;
+    }
+    .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hero-grid, .cards, .split, .why-grid, form { grid-template-columns: 1fr; }
+      .hero { padding-bottom: 20px; }
+      section { padding: 64px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="RxRevenue home">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect width="64" height="64" rx="16" fill="#12352F"/>
+          <path d="M18 44V20h12.2c6.6 0 10.8 3.6 10.8 9.1 0 4.2-2.3 7.2-6.2 8.4L42.6 44h-7.2l-7.1-6.2H25V44H18Zm7-18.6v6.8h4.8c3.1 0 4.8-1.4 4.8-3.4s-1.7-3.4-4.8-3.4H25Z" fill="#E4C98A"/>
+          <path d="M46 20v24" stroke="#C9A45C" stroke-width="2.2"/>
+          <path d="M42 32h8" stroke="#C9A45C" stroke-width="2.2"/>
+        </svg>
+        <div class="brand-name">Rx<span>Revenue</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#why">Why us</a>
+        <a href="#contact" class="btn btn-gold">Talk to us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="kicker">Revenue cycle management</div>
+          <h1>Medical billing that <em>collects</em> — not just submits.</h1>
+          <p class="lede">RxRevenue LLC runs the full revenue cycle for practices that are tired of denials, dirty claims, and payer files that never match the contract. Coding to cash. Rosters to appeals. We handle it.</p>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#contact">Request a billing review</a>
+            <a class="btn btn-ghost" href="#services">See what we take on</a>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <h3>Built for practices that cannot afford leakage.</h3>
+          <div class="stat-row">
+            <div class="stat"><b>Claims → cash</b><span>Clean claim workflow, payer follow-up, and posting.</span></div>
+            <div class="stat"><b>Denial control</b><span>Root-cause fixes, not just resubmits.</span></div>
+            <div class="stat"><b>Network load</b><span>Credentialing, roster, taxonomy, and participation files.</span></div>
+            <div class="stat"><b>AR recovery</b><span>Aged workqueues with a human on the payer line.</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="trust">
+      <div class="wrap trust-row">
+        <span>Commercial</span>
+        <span>Medicare Advantage</span>
+        <span>Medicaid / TennCare</span>
+        <span>Workers’ Comp</span>
+        <span>Self-pay & statements</span>
+      </div>
+    </div>
+
+    <section class="services" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Everything between the visit and the deposit.</h2>
+          <p>One company. One accountable owner. No handoffs into a call center that doesn’t know your TIN from your NPI.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="16" height="16" rx="3"/><path d="M7 8h8M7 12h5"/></svg>
+            </div>
+            <h3>Claims & charge capture</h3>
+            <p>Encounter review, coding support, claim scrubbing, electronic submission, and payment posting that actually ties out.</p>
+          </article>
+          <article class="card">
+            <div class="icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M11 7v5l3 2"/></svg>
+            </div>
+            <h3>Denial management</h3>
+            <p>CO-16, CO-197, CO-45, eligibility, authorization, and medical necessity — worked with documentation, not hope.</p>
+          </article>
+          <article class="card">
+            <div class="icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 18V6l7-3 7 3v12"/><path d="M8 18v-6h8v6"/></svg>
+            </div>
+            <h3>Credentialing & rosters</h3>
+            <p>CAQH, payer enrollment, taxonomy, group adds, and network-load corrections so claims stop denying as out of network.</p>
+          </article>
+          <article class="card">
+            <div class="icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 16l5-5 3 3 6-7"/><path d="M14 7h4v4"/></svg>
+            </div>
+            <h3>AR & underpayments</h3>
+            <p>Aged A/R worklists, underpayment recovery against contracted rates, and secondary billing that doesn’t sit.</p>
+          </article>
+          <article class="card">
+            <div class="icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="14" height="13" rx="2"/><path d="M8 3v4M14 3v4M4 10h14"/></svg>
+            </div>
+            <h3>Patient billing</h3>
+            <p>Clear statements, payment plans, and a front desk script that doesn’t torch the relationship to collect a copay.</p>
+          </article>
+          <article class="card">
+            <div class="icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 14h4l2-5 3 8 2-4h3"/><path d="M4 18h14"/></svg>
+            </div>
+            <h3>Reporting you can run a practice on</h3>
+            <p>Days in A/R, first-pass yield, denial mix, net collection, and payer scorecards — monthly, in plain English.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" style="background:#0b1c18;color:#f4efe6">
+      <div class="wrap split">
+        <div>
+          <div class="kicker">How engagement works</div>
+          <h2 style="margin:10px 0 16px">We take the backlog. Then we take the process.</h2>
+          <p style="color:rgba(244,239,230,.7)">Most practices don’t need another portal login. They need someone who will open the ERA, call the payer, fix the roster, and tell the owner the truth about why money is stuck.</p>
+        </div>
+        <div class="panel">
+          <div class="steps">
+            <div class="step">
+              <div class="num">01</div>
+              <div>
+                <h3>Intake & chart the leaks</h3>
+                <p>Payer mix, denial codes, credentialing files, clearinghouse setup, and 90 days of claims performance.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">02</div>
+              <div>
+                <h3>Stabilize cash</h3>
+                <p>Work the aged A/R and the dirty-claim rules first so deposits move while the system is rebuilt.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">03</div>
+              <div>
+                <h3>Lock the front of the cycle</h3>
+                <p>Eligibility, authorizations, coding habits, and payer participation files — so new claims don’t inherit old problems.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">04</div>
+              <div>
+                <h3>Report and stay on it</h3>
+                <p>A monthly operating review. No vanity dashboards. Just what collected, what didn’t, and who owns the next fix.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="why" id="why">
+      <div class="wrap why-grid">
+        <div>
+          <div class="kicker" style="color:#8a6d2f">Why RxRevenue</div>
+          <h2>A billing company that still picks up the phone.</h2>
+          <p style="margin-top:14px;color:var(--muted)">RxRevenue LLC is built for independent practices, groups, and specialty clinics that have been burned by offshore queues and “we submitted it” updates. We stay inside the work: payer portals, CAQH, contracts, and the claim.</p>
+          <ul class="checks">
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a45c" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+              Owner-accountable — not a ticket number.
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a45c" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+              Network and roster work included, because billing dies when the file is wrong.
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a45c" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+              Transparent fees tied to collections and scope — not mystery add-ons.
+            </li>
+            <li>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9a45c" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+              HIPAA-ready workflows, BAAs, and least-privilege access to your PMS.
+            </li>
+          </ul>
+        </div>
+        <blockquote class="quote">
+          “If the claim denied because the nurse practitioner loaded as the wrong specialty, that is not a billing problem. That is a revenue-cycle problem. We treat it as one job.”
+          <cite>— RxRevenue LLC</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap" style="display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start">
+        <div class="section-head" style="margin:0">
+          <h2>Send the last 30 days of denials. We’ll tell you where the money is.</h2>
+          <p>Prefer email? Reach RxRevenue LLC directly and attach a denial report, payer mix, or roster file. This form opens your mail app so nothing is stored on a server.</p>
+          <p style="margin-top:22px;color:var(--gold-2);font-weight:600">RxRevenue LLC</p>
+          <p style="margin-top:6px">Revenue cycle management · Medical billing</p>
+        </div>
+        <form onsubmit="sendMail(event)">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" required placeholder="Your name" />
+          </div>
+          <div>
+            <label for="practice">Practice</label>
+            <input id="practice" name="practice" placeholder="Clinic or group" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@practice.com" />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" placeholder="(xxx) xxx-xxxx" />
+          </div>
+          <div class="full">
+            <label for="need">What do you need handled?</label>
+            <select id="need" name="need">
+              <option>Full-service billing</option>
+              <option>Denial / A/R cleanup</option>
+              <option>Credentialing & roster repair</option>
+              <option>Coding review</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="full">
+            <label for="msg">Notes</label>
+            <textarea id="msg" name="msg" placeholder="Payer mix, specialty, what’s breaking…"></textarea>
+          </div>
+          <div class="full">
+            <button class="btn btn-gold" type="submit">Draft the email</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>© <span id="y"></span> RxRevenue LLC. All rights reserved.</div>
+      <div>Replace the logo mark with yours — the SVG in the header is a placeholder wordmark.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+    function sendMail(e) {
+      e.preventDefault();
+      const f = e.target;
+      const body = [
+        "Name: " + f.name.value,
+        "Practice: " + f.practice.value,
+        "Email: " + f.email.value,
+        "Phone: " + f.phone.value,
+        "Need: " + f.need.value,
+        "",
+        f.msg.value
+      ].join("\\n");
+      /* Put your real inbox here before you send this file out */
+      const to = "hello@rxrevenue.com";
+      location.href = "mailto:" + to + "?subject=" + encodeURIComponent("RxRevenue inquiry — " + (f.practice.value || f.name.value)) + "&body=" + encodeURIComponent(body);
+    }
+  </script>
+</body>
+</html>
