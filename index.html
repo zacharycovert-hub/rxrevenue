@@ -26,6 +26,8 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    /* Keep anchor targets clear of the 77px sticky header */
+    section[id], main[id] { scroll-margin-top: 92px; }
     body {
       font-family: "Outfit", system-ui, sans-serif;
       background: var(--cream);
@@ -221,6 +223,9 @@
       color: var(--paper);
     }
     .contact .section-head p { color: rgba(244,239,230,.7); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: start;
+    }
     form {
       display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
       background: rgba(255,255,255,.04);
@@ -278,7 +283,8 @@
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .mobile-nav { display: block; }
-      .hero-grid, .cards, .split, .why-grid, form { grid-template-columns: 1fr; }
+      .hero-grid, .cards, .split, .why-grid, .contact-grid, form { grid-template-columns: 1fr; }
+      .contact-grid { gap: 32px; }
       .hero { padding-bottom: 20px; }
       section { padding: 64px 0; }
     }
@@ -483,7 +489,7 @@
     </section>
 
     <section class="contact" id="contact">
-      <div class="wrap" style="display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start">
+      <div class="wrap contact-grid">
         <div class="section-head" style="margin:0">
           <h2>Send the last 30 days of denials. We’ll tell you where the money is.</h2>
           <p>Prefer email? Reach RxRevenue LLC directly and attach a denial report, payer mix, or roster file. This form opens your mail app so nothing is stored on a server.</p>
@@ -556,7 +562,7 @@
         "Need: " + f.need.value,
         "",
         f.msg.value
-      ].join("\\n");
+      ].join("\n");
       /* Put your real inbox here before you send this file out */
       const to = "hello@rxrevenue.com";
       location.href = "mailto:" + to + "?subject=" + encodeURIComponent("RxRevenue inquiry — " + (f.practice.value || f.name.value)) + "&body=" + encodeURIComponent(body);
